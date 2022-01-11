@@ -1,11 +1,12 @@
 package br.com.musicsuggestions.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sun.istack.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,18 +20,18 @@ public class User {
     private Long id;
 
     @Column(name = "full_name")
-    @NotNull
-    @Size(max = 255)
+    @NotNull(message = "O campo nome não pode ser nulo ou vazio!")
+    @Size(min = 3, max = 32, message = "O campo nome deve ter entre 3 32 caracteres!")
     private String fullName;
 
     @Column
-    @Email
-    @NotNull
+    @Email(message = "Email inválido!")
+    @NotNull(message = "O campo email não pode ser nulo ou vazio!")
     private String email;
 
     @Column
-    @NotNull
-    @Size(min = 6, max = 64)
+    @NotNull(message = "O campo senha não pode ser nulo ou vazio!")
+    @Size(min = 6, max = 64, message = "O campo senha não pode ser menor que 6 caracteres e maior que 64!")
     private String password;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
