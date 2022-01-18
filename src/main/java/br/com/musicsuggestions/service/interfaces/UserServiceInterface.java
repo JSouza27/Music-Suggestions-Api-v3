@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserServiceInterface {
 
-    String save(User user);
+    Object save(User user);
 
     Optional<User> getById(Long id);
 

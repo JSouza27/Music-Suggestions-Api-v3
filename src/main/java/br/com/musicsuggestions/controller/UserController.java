@@ -19,9 +19,9 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/user/register")
-    ResponseEntity<String> save(@RequestBody User userRegistration)  {
+    ResponseEntity<Object> save(@RequestBody User userRegistration)  {
         userRegistration.setCreatedAt(LocalDateTime.now());
-        String response = service.save(userRegistration);
+        Object response = service.save(userRegistration);
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(response);
