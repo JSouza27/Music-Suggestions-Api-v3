@@ -4,8 +4,6 @@ import br.com.musicsuggestions.entity.User;
 import br.com.musicsuggestions.repository.UserRepository;
 import br.com.musicsuggestions.service.interfaces.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +16,7 @@ public class UserService implements UserServiceInterface {
     private UserRepository userRepository;
 
     @Override
-    public Object save(User user) {
+    public User save(User user) {
         User newUser = userRepository.save(user);
 
         return user;

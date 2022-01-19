@@ -1,6 +1,8 @@
 package br.com.musicsuggestions.controller;
 
+import br.com.musicsuggestions.dto.UserDTO;
 import br.com.musicsuggestions.entity.User;
+import br.com.musicsuggestions.mapper.UserMapperIml;
 import br.com.musicsuggestions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,13 +20,18 @@ public class UserController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private UserMapperIml mapper;
+
     @PostMapping("/user/register")
-    ResponseEntity<Object> save(@RequestBody User userRegistration)  {
+    ResponseEntity<UserDTO> save(@RequestBody User userRegistration)  {
         userRegistration.setCreatedAt(LocalDateTime.now());
-        Object response = service.save(userRegistration);
+        User response = service.save(userRegistration);
+        UserDTO user = mapper.userMap(response);
+
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(response);
+            .body(user);
     }
 
     @GetMapping("/user/search={userId}")
@@ -37,11 +44,13 @@ public class UserController {
 
 
     @GetMapping("/user/list")
-    ResponseEntity<List<User>> getAllUsers() {
+    ResponseEntity<List<UserDTO>> getAllUsers() {
         List<User> response = service.getAllUsers();
+        List<UserDTO> allUsers = mapper.listMap(response);
+
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(response);
+            .body(allUsers);
     }
 
     @PutMapping("/user/update={id}")
