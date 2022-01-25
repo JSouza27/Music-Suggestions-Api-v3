@@ -1,26 +1,38 @@
 package br.com.musicsuggestions.service;
 
 import br.com.musicsuggestions.dto.OpenWeatherMapDTO;
+import br.com.musicsuggestions.mapper.OpenWeatherImp;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 public class OpenWeatherMapService {
 
-    String url = "http://api.openweathermap.org/data/2.5/weather?q=";
-    String apiKey = "&appid=6672b556198081a055b9cd8ade1497d7&units=metric";
+    @Autowired
+    OpenWeatherImp mapper;
 
-    public int getTemperature(String city) throws JsonProcessingException {
-        RestTemplate restTemplate = new RestTemplate();
+    @Value("${open-wather-map-api-key}")
+    String apiKey;
+    String url = "api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric";
 
-        String jsonString = restTemplate.getForObject(url + city + apiKey, String.class);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode temp = mapper.readTree(jsonString).get("main").get("temp");
+    public OpenWeatherMapDTO getOpenWeather(String city) throws JsonProcessingException {
+        WebClient client = WebClient.create();
+        Mono<String> responseJson = client.get()
+            .uri(url, city, apiKey)
+            .retrieve()
+            .bodyToMono(String.class);
 
-        return temp.intValue();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode json = objectMapper.readTree(responseJson.block()).get("main");
+
+        OpenWeatherMapDTO response = mapper.map(json);
+
+        return response;
     }
 }

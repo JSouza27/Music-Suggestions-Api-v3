@@ -3,17 +3,20 @@ package br.com.musicsuggestions.dto;
 public class OpenWeatherMapDTO {
 
     private double temp;
-    private double feels_like;
-    private double temp_min;
-    private double temp_max;
+    private double feelsLike;
+    private double tempMin;
+    private double tempMax;
     private int pressure;
     private int humidity;
 
-    public OpenWeatherMapDTO(double temp, double feels_like, double temp_min, double temp_max, int pressure, int humidity) {
+    public OpenWeatherMapDTO() {
+    }
+
+    public OpenWeatherMapDTO(double temp, double feelsLike, double tempMin, double tempMax, int pressure, int humidity) {
         this.temp = temp;
-        this.feels_like = feels_like;
-        this.temp_min = temp_min;
-        this.temp_max = temp_max;
+        this.feelsLike = feelsLike;
+        this.tempMin = tempMin;
+        this.tempMax = tempMax;
         this.pressure = pressure;
         this.humidity = humidity;
     }
@@ -26,28 +29,28 @@ public class OpenWeatherMapDTO {
         this.temp = temp;
     }
 
-    public double getFeels_like() {
-        return feels_like;
+    public double getFeelsLike() {
+        return feelsLike;
     }
 
-    public void setFeels_like(double feels_like) {
-        this.feels_like = feels_like;
+    public void setFeelsLike(double feelsLike) {
+        this.feelsLike = feelsLike;
     }
 
-    public double getTemp_min() {
-        return temp_min;
+    public double getTempMin() {
+        return tempMin;
     }
 
-    public void setTemp_min(double temp_min) {
-        this.temp_min = temp_min;
+    public void setTempMin(double tempMin) {
+        this.tempMin = tempMin;
     }
 
-    public double getTemp_max() {
-        return temp_max;
+    public double getTempMax() {
+        return tempMax;
     }
 
-    public void setTemp_max(double temp_max) {
-        this.temp_max = temp_max;
+    public void setTempMax(double tempMax) {
+        this.tempMax = tempMax;
     }
 
     public int getPressure() {

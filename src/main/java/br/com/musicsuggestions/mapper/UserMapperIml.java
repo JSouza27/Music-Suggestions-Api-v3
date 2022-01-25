@@ -2,6 +2,7 @@ package br.com.musicsuggestions.mapper;
 
 import br.com.musicsuggestions.dto.UserDTO;
 import br.com.musicsuggestions.entity.User;
+import br.com.musicsuggestions.mapper.interfaces.UserMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package br.com.musicsuggestions.service.interfaces;
 
+import br.com.musicsuggestions.dto.BodyDTO;
 import br.com.musicsuggestions.entity.Historic;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Optional;
 
 public interface HistoricServiceInterface {
 
-    Historic save(Historic historic);
+    Historic save(BodyDTO bodyDTO, String categoryId);
 
     Optional<Historic> getById(Long id);
 

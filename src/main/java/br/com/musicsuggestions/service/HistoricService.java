@@ -1,11 +1,14 @@
 package br.com.musicsuggestions.service;
 
+import br.com.musicsuggestions.dto.BodyDTO;
 import br.com.musicsuggestions.entity.Historic;
+import br.com.musicsuggestions.entity.User;
 import br.com.musicsuggestions.repository.HistoricRepository;
 import br.com.musicsuggestions.service.interfaces.HistoricServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +18,17 @@ public class HistoricService implements HistoricServiceInterface {
     @Autowired
     private HistoricRepository historicRepository;
 
+    @Autowired UserService userService;
+
     @Override
-    public Historic save(Historic historic) {
+    public Historic save(BodyDTO body, String categoryId) {
+        User user = userService.getById(body.getUserId()).get();
+
+        Historic historic = new Historic();
+        historic.setCreatedAt(LocalDateTime.now());
+        historic.setPlayList(categoryId);
+        historic.setUser(user);
+
         return historicRepository.save(historic);
     }
 

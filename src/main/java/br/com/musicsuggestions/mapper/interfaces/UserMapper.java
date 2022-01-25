@@ -1,4 +1,4 @@
-package br.com.musicsuggestions.mapper;
+package br.com.musicsuggestions.mapper.interfaces;
 
 import br.com.musicsuggestions.dto.UserDTO;
 import br.com.musicsuggestions.entity.User;
