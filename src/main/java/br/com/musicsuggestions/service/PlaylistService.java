@@ -41,6 +41,8 @@ public class PlaylistService {
         if (temperature < 10) {
             playlist = spotifyService.getSpotifyPlaylist("classical", body.getSpotifyToken());
         }
+
+        historicService.save(body, playlist.getHref());
         
         return playlist;
     }

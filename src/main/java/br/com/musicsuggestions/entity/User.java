@@ -37,7 +37,8 @@ public class User {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private List<Historic> historic;
 
     public User() {

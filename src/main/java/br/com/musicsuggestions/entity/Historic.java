@@ -19,11 +19,10 @@ public class Historic {
     @Column(name = "play_list")
     @NotNull
     @Size(max = 100)
-    private String playList;
+    private String playlist;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_id")
+    private Long userId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @CreatedDate
@@ -32,9 +31,10 @@ public class Historic {
     public Historic() {
     }
 
-    public Historic(String playList, User user, LocalDateTime createdAt) {
-        this.playList = playList;
-        this.user = user;
+    public Historic(Long id, String playlist, Long userId, LocalDateTime createdAt) {
+        this.id = id;
+        this.playlist = playlist;
+        this.userId = userId;
         this.createdAt = createdAt;
     }
 
@@ -46,20 +46,20 @@ public class Historic {
         this.id = id;
     }
 
-    public String getPlayList() {
-        return playList;
+    public String getPlaylist() {
+        return playlist;
     }
 
-    public void setPlayList(String playList) {
-        this.playList = playList;
+    public void setPlaylist(String playlist) {
+        this.playlist = playlist;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public LocalDateTime getCreatedAt() {

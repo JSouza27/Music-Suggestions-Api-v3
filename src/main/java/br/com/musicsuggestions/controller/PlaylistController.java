@@ -26,7 +26,6 @@ public class PlaylistController {
     ResponseEntity<Object> getPlaylist(@RequestBody BodyDTO body) throws IOException, ParseException, SpotifyWebApiException {
         Object playlist = service.getPlaylist(body);
 
-
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(playlist);

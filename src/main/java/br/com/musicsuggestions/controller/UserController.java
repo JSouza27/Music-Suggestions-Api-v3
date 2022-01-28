@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -24,18 +27,18 @@ public class UserController {
     private UserMapperIml mapper;
 
     @PostMapping("/user/register")
-    ResponseEntity<UserDTO> save(@RequestBody User userRegistration)  {
-        userRegistration.setCreatedAt(LocalDateTime.now());
-        User response = service.save(userRegistration);
-        UserDTO user = mapper.userMap(response);
+    ResponseEntity<UserDTO> save(@Valid @RequestBody User userRegistration)  {
+            userRegistration.setCreatedAt(LocalDateTime.now());
+            User response = service.save(userRegistration);
+            UserDTO user = mapper.userMap(response);
 
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(user);
+            return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(user);
     }
 
     @GetMapping("/user/search={userId}")
-    ResponseEntity<User> getById(@PathVariable("userId") Long userId) {
+    ResponseEntity<User> getById(@Valid @PathVariable("userId") Long userId) {
         Optional<User> response = service.getById(userId);
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -54,7 +57,7 @@ public class UserController {
     }
 
     @PutMapping("/user/update={id}")
-    ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User user) {
+    ResponseEntity<User> updateUser(@Valid @PathVariable("id") Long id, @Valid @RequestBody User user) {
         User response = service.updateUser(id, user);
         return ResponseEntity
             .status(HttpStatus.OK)
@@ -62,10 +65,16 @@ public class UserController {
     }
 
     @DeleteMapping("/user/delete={userId}")
-    ResponseEntity<String> delete(@PathVariable("userId") Long userId) {
-        String response = service.delete(userId);
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(response);
+    ResponseEntity<String> delete(@Valid @PathVariable("userId") Long userId) {
+        try {
+            String response = service.delete(userId);
+            return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Usuário não encontrado", e
+            );
+        }
     }
 }
