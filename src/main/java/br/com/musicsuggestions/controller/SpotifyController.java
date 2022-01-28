@@ -46,14 +46,4 @@ public class SpotifyController {
             .status(HttpStatus.OK)
             .body(response);
     }
-
-    @GetMapping("/spotify/playlist")
-    ResponseEntity<String> getPlaylist(@RequestBody SpotifyDTO spotifyDTO) {
-//        String response = service.getPlaylist(spotifyDTO.getCategoryId(), spotifyDTO.getToken());
-//
-//        return ResponseEntity
-//            .status(HttpStatus.OK)
-//            .body(response);
-        return null;
-    }
 }

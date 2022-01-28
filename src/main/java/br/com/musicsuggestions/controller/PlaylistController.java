@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
@@ -23,7 +24,7 @@ public class PlaylistController {
     PlaylistService service;
 
     @GetMapping("/playlist")
-    ResponseEntity<Object> getPlaylist(@RequestBody BodyDTO body) throws IOException, ParseException, SpotifyWebApiException {
+    ResponseEntity<Object> getPlaylist(@Valid  @RequestBody BodyDTO body) throws IOException, ParseException, SpotifyWebApiException {
         Object playlist = service.getPlaylist(body);
 
         return ResponseEntity
